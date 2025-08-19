@@ -63,19 +63,19 @@ const Home = () => {
 	const [mostrarModal, setMostrarModal] = useState(false);
 
 	useEffect(() => {
-	axios.get("https://dummyjson.com/todos")
-		.then(res => {
-			const tarefasDaAPI = res.data.todos.map((tarefa: any) => ({
-				id: tarefa.id,
-				title: tarefa.todo,
-				completed: tarefa.completed,
-			}));
-			setTarefas(tarefasDaAPI);
-		})
-		.catch(err => {
-			console.error("Erro ao buscar tarefas:", err);
-		});
-}, []);
+		axios.get("https://dummyjson.com/todos")
+			.then(res => {
+				const tarefasDaAPI = res.data.todos.map((tarefa: any) => ({
+					id: tarefa.id,
+					title: tarefa.todo,
+					completed: tarefa.completed,
+				}));
+				setTarefas(tarefasDaAPI);
+			})
+			.catch(err => {
+				console.error("Erro ao buscar tarefas:", err);
+			});
+	}, []);
 
 	const adicionarTarefa = (titulo: string) => {
 		const novaTarefa: TarefaInterface = {
@@ -86,18 +86,20 @@ const Home = () => {
 		setTarefas((prev) => [...prev, novaTarefa]);
 	};
 
-
 	return (
 		<div className="container mx-auto p-4">
 			<Cabecalho />
 
 			<div className="flex justify-end mb-4">
-        		<button onClick={() => setMostrarModal(true)} className="bg-pink-600 hover:cursor-pointer text-white px-10 py-2 rounded">
-         				Nova Tarefa
-       			</button>
-        	</div>
+				<button 
+					onClick={() => setMostrarModal(true)} 
+					className="bg-pink-600 hover:cursor-pointer text-white px-10 py-2 rounded"
+				>
+					Nova Tarefa
+				</button>
+			</div>
 
-						<Tarefas dados={tarefas} />
+			<Tarefas dados={tarefas} />
 
 			{mostrarModal && (
 				<ModalTarefa
@@ -105,15 +107,6 @@ const Home = () => {
 					onFechar={() => setMostrarModal(false)}
 				/>
 			)}
-		</div>
-	);
-};
-
-export default Home;
-
-			{mostrarModal && (
-       			<ModalTarefa onAdicionar={adicionarTarefa} onFechar={() => setMostrarModal(false)}/>
-     )}
 		</div>
 	);
 };
